@@ -1,52 +1,66 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const targets = document.querySelectorAll('.target');
-  let activeElement = null;
-  let isDragging = false;
-  let offsetX, offsetY;
-  let originalPosition = null;
+  const targets = document.querySelectorAll('.target'); 
+  
+  let activeElement = null; // Активный элемент
+  let flag = false; // Состояние перемещения элемента
+  let followingFinger = false; // Режим "следующий за пальцем"
+  let followingFingerElement = null; // Элемент, следящий за пальцем
+  let offsetX, offsetY; // Смещение относительно курсора
+  let startPosition = null; // Исходная позиция элемента
 
   targets.forEach(target => {
+
+    // Обработчик события начала касания (touchstart)
     target.addEventListener('touchstart', (e) => {
-      if (!isDragging) {
-        isDragging = true;
+      if (!activeElement) {
         activeElement = target;
-        originalPosition = {
+        startPosition = {
           left: target.style.left,
           top: target.style.top,
         };
-        offsetX = e.touches[0].clientX - activeElement.getBoundingClientRect().left;
-        offsetY = e.touches[0].clientY - activeElement.getBoundingClientRect().top;
-      } else {
-        isDragging = false;
-        activeElement = null;
+
+        if (followingFinger) {
+          followingFingerElement = target;
+        }
+
+        // Проверяем, если это двойное касание
+        if (e.touches.length === 1) {
+          if (flag) {
+            flag = false; // Прерываем перетаскивание
+          } else {
+            activeElement.style.backgroundColor = 'red';
+          }
+        } else if (e.touches.length === 2) {
+          followingFinger = !followingFinger;
+          activeElement.style.backgroundColor = followingFinger ? 'green' : 'red';
+        }
+
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }
     });
 
-    target.addEventListener('touchend', () => {
-      if (isDragging) {
-        isDragging = false;
-        activeElement = null;
+    // Обработчик события перемещения пальца (touchmove)
+    document.addEventListener('touchmove', (e) => {
+      if (activeElement) {
+        const touch = e.touches[0];
+        activeElement.style.left = touch.clientX - offsetX + 'px'; 
+        activeElement.style.top = touch.clientY - offsetY + 'px';
       }
     });
-  });
 
-  document.addEventListener('touchmove', (e) => {
-    if (activeElement) {
-      activeElement.style.left = e.touches[0].clientX - offsetX + 'px';
-      activeElement.style.top = e.touches[0].clientY - offsetY + 'px';
-    }
-  });
-
-  document.addEventListener('touchend', () => {
-    activeElement = null;
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && activeElement) {
-      isDragging = false;
-      activeElement.style.left = originalPosition.left;
-      activeElement.style.top = originalPosition.top;
-      activeElement = null;
-    }
+    // Обработчик события окончания касания (touchend)
+    document.addEventListener('touchend', (e) => {
+      if (flag) {
+        flag = false; // Прерываем перетаскивание
+      } else if (followingFingerElement) {
+        followingFinger = false;
+        followingFingerElement.style.backgroundColor = 'red';
+        followingFingerElement = null;
+      } else if (activeElement) {
+        activeElement = null; // Сбрасываем активный элемент
+      }
+    });
   });
 });
