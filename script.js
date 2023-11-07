@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const targets = document.querySelectorAll('.target'); 
   
   let activeElement = null; // Активный элемент
-  let flag = false; // Состояние перемещения элемента
-  let followingFinger = false; // Режим "следующий за пальцем"
-  let followingFingerElement = null; // Элемент, следящий за пальцем
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
 
@@ -18,22 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
           left: target.style.left,
           top: target.style.top,
         };
-
-        if (followingFinger) {
-          followingFingerElement = target;
-        }
-
-        // Проверяем, если это двойное касание
-        if (e.touches.length === 1) {
-          if (flag) {
-            flag = false; // Прерываем перетаскивание
-          } else {
-            activeElement.style.backgroundColor = 'red';
-          }
-        } else if (e.touches.length === 2) {
-          followingFinger = !followingFinger;
-          activeElement.style.backgroundColor = followingFinger ? 'green' : 'red';
-        }
 
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
@@ -50,16 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Обработчик события окончания касания (touchend)
+    // Обработчик события окончания касания вторым пальцем
     document.addEventListener('touchend', (e) => {
-      if (flag) {
-        flag = false; // Прерываем перетаскивание
-      } else if (followingFingerElement) {
-        followingFinger = false;
-        followingFingerElement.style.backgroundColor = 'red';
-        followingFingerElement = null;
-      } else if (activeElement) {
-        activeElement = null; // Сбрасываем активный элемент
+      if (activeElement && e.touches.length > 1) {
+        // Прерываем перетаскивание и возвращаем элемент на исходное место
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null;
       }
     });
   });
