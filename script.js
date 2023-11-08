@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
   
   let activeElement = null; // Активный элемент
   let flag = false; // Состояние перемещения элемента
-  let followingFinger = false; // Режим следования за пальцем
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
+  let followingFinger = false; // Режим следования за пальцем
   let lastTouchEnd = 0; // Время последнего touchend
 
   targets.forEach(target => {
@@ -13,11 +13,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события touchstart
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (activeElement && currentTime - lastTouchEnd < 300) {
+      if (followingFinger) {
+        // Если включен режим следования за пальцем, игнорируем touchstart
+        e.preventDefault();
+      } else if (activeElement && currentTime - lastTouchEnd < 300) {
         // Если прошло менее 300 миллисекунд с последнего touchend, считаем это двойным касанием
         flag = false;
         followingFinger = true;
         activeElement.style.backgroundColor = 'green';
+        e.preventDefault();
       } else {
         activeElement = target;
         startPosition = {
@@ -29,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }
-      e.preventDefault(); // Предотвращаем дефолтное действие браузера
     });
   });
 
@@ -51,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (followingFinger) {
       followingFinger = false;
       activeElement.style.backgroundColor = 'red';
-      activeElement = null;
     } else {
       activeElement = null;
     }
