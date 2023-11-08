@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   const targets = document.querySelectorAll('.target'); 
   
-  let activeElement = null; //активный элемент
-  let flag = false; //состояние перемещения элемента
-  let offsetX, offsetY; //смещение относительно курсора
-  let startPosition = null; //исходная позиция элемента
+  let activeElement = null; // Активный элемент
+  let flag = false; // Состояние перемещения элемента
+  let offsetX, offsetY; // Смещение относительно курсора
+  let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
   let touchStartTime = 0; // Время начала первого касания
 
@@ -19,16 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (touchCount === 2) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
           activeElement.style.backgroundColor = 'green';
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-          e.preventDefault();
         } else {
           touchStartTime = currentTime;
         }
@@ -36,12 +27,12 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement = target;
         startPosition = {
           left: target.style.left,
-        top: target.style.top,
-      };
-      const touch = e.touches[0];
-      offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-      offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      e.preventDefault(); 
+          top: target.style.top,
+        };
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        e.preventDefault(); 
       }
     });
   });
