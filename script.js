@@ -11,28 +11,30 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
-      if (touchCount === 0) {
-        // Если это первое касание, начинаем перетаскивание
-        activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
-        const touch = e.touches[0];
-        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      } else if (touchCount === 1) {
-        // Если это второе касание, считаем это двойным нажатием и меняем цвет
-        touchCount = 0;
-        activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
-        activeElement.style.backgroundColor = 'green';
-      }
       touchCount++;
-      e.preventDefault();
+      if (touchCount === 1) {
+        // Если это первое касание, запускаем таймер для проверки на двойное касание
+        setTimeout(() => {
+          if (!isDragging) {
+            // Если не было перемещения, меняем цвет
+            activeElement.style.backgroundColor = 'green';
+          }
+          touchCount = 0;
+        }, 300); // Измените задержку, если необходимо
+      } else if (touchCount === 2) {
+        // Если это второе касание, считаем его двойным
+        touchCount = 0;
+        isDragging = false;
+        activeElement.style.backgroundColor = 'red';
+      }
+      activeElement = target;
+      startPosition = {
+        left: target.style.left,
+        top: target.style.top,
+      };
+      const touch = e.touches[0];
+      offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+      offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
     });
 
     // Обработчик события движения при касании
