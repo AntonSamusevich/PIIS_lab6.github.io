@@ -15,12 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
         left: target.style.left,
         top: target.style.top,
       };
-      if (e.touches.length === 2) { // Двойное касание
-        flag = true;
-        activeElement.style.backgroundColor = 'green';
-      } else {
-        activeElement.style.backgroundColor = 'red';
-      }
       const touch = e.touches[0];
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
