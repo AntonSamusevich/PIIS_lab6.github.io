@@ -1,71 +1,87 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const targets = document.querySelectorAll('.target');
+  const targets = document.querySelectorAll('.target'); 
   
-  let activeElement = null; // Активный элемент
-  let flag = false; // Состояние перемещения элемента
-  let isFollowingFinger = false; // Флаг для следования за пальцем
-  let offsetX, offsetY; // Смещение относительно курсора
-  let startPosition = null; // Исходная позиция элемента
+  let activeElement = null; // активный элемент
+  let flag = false; // состояние перемещения элемента
+  let followingFinger = false; // флаг режима "следования за пальцем"
+  let offsetX, offsetY; // смещение относительно курсора
+  let startPosition = null; // исходная позиция элемента
 
   targets.forEach(target => {
+
+    // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       activeElement = target;
       startPosition = {
         left: target.style.left,
         top: target.style.top,
       };
-
-      const touch = e.touches[0];
-      offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-      offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-
-      if (e.touches.length === 2) {
+      if (e.touches.length === 2) { // Двойное касание
         flag = true;
-        isFollowingFinger = false;
         activeElement.style.backgroundColor = 'green';
+        followingFinger = false; // Выход из режима "следования за пальцем"
       } else {
-        if (!isFollowingFinger) {
-          activeElement.style.backgroundColor = 'red';
+        activeElement.style.backgroundColor = 'red';
+        if (!followingFinger) {
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }
       }
-
-      e.preventDefault();
+      e.preventDefault(); // Предотвращаем дефолтное действие браузера
     });
   });
 
+  // Обработчик события движения при касании
   document.addEventListener('touchmove', (e) => {
     if (activeElement) {
-      const touch = e.touches[0];
-      if (isFollowingFinger) {
-        // Если элемент следует за пальцем, обновите его позицию
-        activeElement.style.left = touch.clientX - offsetX + 'px';
+      if (flag) {
+        // Режим перемещения
+        const touch = e.touches[0];
+        activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
+      } else if (followingFinger) {
+        // Режим "следования за пальцем"
+        const touch = e.touches[0];
+        activeElement.style.left = touch.clientX - offsetX + 'px'; 
+        activeElement.style.top = touch.clientY - offsetY + 'px';
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
-
-      e.preventDefault();
     }
   });
 
+  // Обработчик события завершения касания
   document.addEventListener('touchend', (e) => {
     if (flag) {
-      flag = false;
+      flag = false; // Прерываем перетаскивание
+      followingFinger = false; // Выход из режима "следования за пальцем"
     } else {
-      activeElement = null;
+      activeElement = null; // Сбрасываем активный элемент
+      if (followingFinger) {
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера при завершении "следования за пальцем"
+      }
     }
   });
 
+  // Обработчик события касания вторым пальцем
   document.addEventListener('touchstart', (e) => {
     if (activeElement && e.touches.length === 2) {
-      flag = false;
-      isFollowingFinger = false;
+      flag = false; // Прерываем перетаскивание
       activeElement.style.backgroundColor = 'red';
       activeElement.style.left = startPosition.left;
       activeElement.style.top = startPosition.top;
+      followingFinger = true; // Входим в режим "следования за пальцем"
+      e.preventDefault(); // Предотвращаем дефолтное действие браузера
+    }
+  });
+
+  // Обработчик события touchstart за пределами активного элемента
+  document.addEventListener('touchstart', (e) => {
+    if (activeElement && e.touches.length === 1 && !flag) {
+      // Если не в режиме перемещения и не в режиме "следования за пальцем"
       activeElement = null;
-      e.preventDefault();
-    } else if (activeElement && e.touches.length === 1) {
-      // Проверка, если элемент должен следовать за пальцем после двойного нажатия
-      isFollowingFinger = true;
+      followingFinger = false;
     }
   });
 });
