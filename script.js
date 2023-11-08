@@ -1,61 +1,42 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const targets = document.querySelectorAll('.target'); 
+  const div = document.querySelector('.target');
   
-  let activeElement = null; //активный элемент
-  let flag = false; //состояние перемещения элемента
-  let offsetX, offsetY; //смещение относительно курсора
-  let startPosition = null; //исходная позиция элемента
+  let followingFinger = false; // Режим следования за пальцем
+  let lastTouchEnd = 0; // Время последнего touchend
+  let offsetX, offsetY; // Смещение относительно курсора
 
-  targets.forEach(target => {
-
-    // Обработчик события касания начала
-    target.addEventListener('touchstart', (e) => {
-      activeElement = target;
-      startPosition = {
-        left: target.style.left,
-        top: target.style.top,
-      };
-      if (e.touches.length === 2) { // Двойное касание
-        flag = true;
-        activeElement.style.backgroundColor = 'green';
-      } else {
-        activeElement.style.backgroundColor = 'red';
-      }
+  // Обработчик события touchstart для div
+  div.addEventListener('touchstart', (e) => {
+    const currentTime = new Date().getTime();
+    if (followingFinger) {
+      // Если включен режим следования за пальцем, игнорируем touchstart
+      e.preventDefault();
+    } else if (currentTime - lastTouchEnd < 300) {
+      // Если прошло менее 300 миллисекунд с последнего touchend, считаем это двойным касанием
+      followingFinger = true;
       const touch = e.touches[0];
-      offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-      offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      e.preventDefault(); // Предотвращаем дефолтное действие браузера
-    });
-  });
-
-  // Обработчик события движения при касании
-  document.addEventListener('touchmove', (e) => {
-    if (activeElement) {
-      const touch = e.touches[0];
-      activeElement.style.left = touch.clientX - offsetX + 'px'; 
-      activeElement.style.top = touch.clientY - offsetY + 'px';
-      e.preventDefault(); // Предотвращаем дефолтное действие браузера
+      offsetX = touch.clientX - div.getBoundingClientRect().left;
+      offsetY = touch.clientY - div.getBoundingClientRect().top;
+      e.preventDefault();
     }
   });
 
-  // Обработчик события завершения касания
-  document.addEventListener('touchend', (e) => {
-    if (flag) {
-      flag = false; // Прерываем перетаскивание
-    } else {
-      activeElement = null; // Сбрасываем активный элемент
+  // Обработчик события touchmove для div
+  div.addEventListener('touchmove', (e) => {
+    if (followingFinger) {
+      const touch = e.touches[0];
+      div.style.left = touch.clientX - offsetX + 'px';
+      div.style.top = touch.clientY - offsetY + 'px';
+      e.preventDefault();
     }
   });
 
-  // Обработчик события касания вторым пальцем
-  document.addEventListener('touchstart', (e) => {
-    if (activeElement && e.touches.length === 2) {
-      flag = false; // Прерываем перетаскивание
-      activeElement.style.backgroundColor = 'red';
-      activeElement.style.left = startPosition.left;
-      activeElement.style.top = startPosition.top;
-      activeElement = null; // Сбрасываем активный элемент
-      e.preventDefault(); // Предотвращаем дефолтное действие браузера
+  // Обработчик события touchend для div
+  div.addEventListener('touchend', (e) => {
+    if (followingFinger) {
+      followingFinger = false;
+      lastTouchEnd = new Date().getTime();
+      e.preventDefault();
     }
   });
 });
