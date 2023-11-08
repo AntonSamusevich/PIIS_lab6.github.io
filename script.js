@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
-  let touchStartTime = 0; // Время начала первого касания
 
   targets.forEach(target => {
     // Обработчик события касания начала
@@ -15,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (touchCount === 1) {
         // Если это первое касание, запускаем таймер для проверки на двойное касание
         setTimeout(() => {
-          if (!isDragging) {
+          if (!flag) {
             // Если не было перемещения, меняем цвет
             activeElement.style.backgroundColor = 'green';
           }
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else if (touchCount === 2) {
         // Если это второе касание, считаем его двойным
         touchCount = 0;
-        isDragging = false;
+        flag = false;
         activeElement.style.backgroundColor = 'red';
       }
       activeElement = target;
