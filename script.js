@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (touchCount === 0 || (currentTime - touchStartTime < 1000)) {
+      if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 1 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 2) {
