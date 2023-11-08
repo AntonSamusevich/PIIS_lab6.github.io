@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const targets = document.querySelectorAll('.target'); 
+  const targets = document.querySelectorAll('.target');
   
   let activeElement = null; // Активный элемент
   let flag = false; // Состояние перемещения элемента
