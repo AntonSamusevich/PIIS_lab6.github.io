@@ -19,21 +19,27 @@ document.addEventListener('DOMContentLoaded', function () {
         if (touchCount === 2) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
           activeElement.style.backgroundColor = 'green';
         } else {
           touchStartTime = currentTime;
         }
       } else {
+        touchCount = 0;
         activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+        }
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         e.preventDefault(); 
-      }
     });
   });
 
