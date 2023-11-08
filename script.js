@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         e.preventDefault();
-      } else if (touchCount === 1 && currentTime - touchStartTime < 300) {
+      } else if (touchCount === 1 && currentTime - touchStartTime < 2000) {
         // Если touchCount равен 1 и прошло менее 0.3 секунд с начала первого касания, считаем это двойным нажатием
         touchCount = 0;
         activeElement.style.backgroundColor = 'green';
