@@ -6,34 +6,40 @@ document.addEventListener('DOMContentLoaded', function () {
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
+  let touchStartTime = 0; // Время начала первого касания
 
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
-      touchCount++;
-      if (touchCount === 1) {
-        // Если это первое касание, запускаем таймер для проверки на двойное касание
-        setTimeout(() => {
-          if (!flag) {
-            // Если не было перемещения, меняем цвет
-            activeElement.style.backgroundColor = 'green';
-          }
+      const currentTime = new Date().getTime();
+      if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
+        // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
+        touchCount++;
+        if (touchCount === 2) {
+          // Если счетчик достиг двух, считаем это двойным нажатием и меняем цвет
           touchCount = 0;
-        }, 300); // Измените задержку, если необходимо
-      } else if (touchCount === 2) {
-        // Если это второе касание, считаем его двойным
-        touchCount = 0;
-        flag = false;
-        activeElement.style.backgroundColor = 'red';
+          activeElement.style.backgroundColor = 'green';
+          // Убираем активный элемент, чтобы предотвратить перетаскивание
+          activeElement = null;
+        } else {
+          touchStartTime = currentTime;
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+        }
+      } else {
+        activeElement = target;
+        startPosition = {
+          left: target.style.left,
+          top: target.style.top,
+        };
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        e.preventDefault();
       }
-      activeElement = target;
-      startPosition = {
-        left: target.style.left,
-        top: target.style.top,
-      };
-      const touch = e.touches[0];
-      offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-      offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
     });
 
     // Обработчик события движения при касании
