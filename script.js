@@ -1,42 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const targets = document.querySelectorAll('.target'); 
+  const targets = document.querySelectorAll('.target');
   
   let activeElement = null; // Активный элемент
   let flag = false; // Состояние перемещения элемента
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
-  let touchCount = 0; // Счетчик касаний
-  let touchStartTime = 0; // Время начала первого касания
+  let lastTouchStart = 0; // Время последнего touchstart
 
   targets.forEach(target => {
 
     // Обработчик события touchstart
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (touchCount === 0 || (currentTime - touchStartTime < 1000)) {
-        // Если прошло менее 1 секунды с начала первого касания, увеличиваем счетчик
-        touchCount++;
-        if (touchCount === 2) {
-          // Если счетчик достиг двух, считаем это двойным нажатием
-          touchCount = 0;
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
+      if (currentTime - lastTouchStart < 1000) {
+        // Если прошло менее 1 секунды с последнего touchstart, считаем это двойным нажатием
+        if (activeElement) {
           activeElement.style.backgroundColor = 'green';
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
           e.preventDefault();
-        } else {
-          touchStartTime = currentTime;
+          flag = true;
         }
       } else {
-        touchStartTime = currentTime;
         if (activeElement) {
           activeElement.style.backgroundColor = 'red';
           e.preventDefault();
+          flag = true;
         } else {
           activeElement = target;
           startPosition = {
@@ -50,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
           e.preventDefault();
         }
       }
+      lastTouchStart = currentTime;
     });
   });
 
@@ -57,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('touchmove', (e) => {
     if (activeElement) {
       const touch = e.touches[0];
-      activeElement.style.left = touch.clientX - offsetX + 'px'; 
+      activeElement.style.left = touch.clientX - offsetX + 'px';
       activeElement.style.top = touch.clientY - offsetY + 'px';
       e.preventDefault();
     }
