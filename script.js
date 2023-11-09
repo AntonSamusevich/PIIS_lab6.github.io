@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
-      if (e.detail === 2) {
+      const currentTime = new Date().getTime();
+      if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
+        // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
+        touchCount++;
+        if (touchCount === 2) {
+          // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
           activeElement = target;
           startPosition = {
@@ -19,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
             top: target.style.top,
           };
           activeElement.style.backgroundColor = 'green';
+        } else {
+          touchStartTime = currentTime;
+        }
       } else {
         touchCount = 0;
         activeElement = target;
