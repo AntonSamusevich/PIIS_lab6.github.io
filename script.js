@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-
+    
       if (currentTime - touchStartTime > 1000) {
-          touchCount = 0;
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-          epreventDefault(); 
-        }
-      
+        touchCount = 0;
+        activeElement = target;
+        startPosition = {
+          left: target.style.left,
+          top: target.style.top,
+        };
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        e.preventDefault();  // Внесена поправка здесь
+      }
     });
+    
 
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
