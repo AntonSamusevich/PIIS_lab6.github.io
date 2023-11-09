@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       
       const currentTime = new Date().getTime();
+      pressStartTime = currentTime;
 
       if (currentTime - pressStartTime > 1000) {
         activeElement = target;
