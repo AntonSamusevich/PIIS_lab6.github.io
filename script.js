@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
-        if (touchCount === 2) {
+        if (touchCount === 1) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
           activeElement = target;
