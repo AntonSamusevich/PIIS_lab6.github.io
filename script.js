@@ -32,11 +32,12 @@ document.addEventListener('DOMContentLoaded', function () {
         startPosition = {
           left: target.style.left,
           top: target.style.top,
-        };}
+        };
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         e.preventDefault();
+      }
     });
 
     // Обработчик события движения при касании
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const touch = e.touches[0];
       activeElement.style.left = touch.clientX - offsetX + 'px';
       activeElement.style.top = touch.clientY - offsetY + 'px';
+      e.preventDefault(); // Предотвращаем дефолтное действие браузера
     });
 
     // Обработчик события завершения касания
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
         activeElement = null; // Сбрасываем активный элемент
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
     });
   });
