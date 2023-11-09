@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const targets = document.querySelectorAll('.target'); 
   
   let activeElement = null; // Активный элемент
+  let flag = false; // Состояние перемещения элемента
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault(); 
       }
     });
-  
+
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
@@ -53,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
       activeElement = null; // Сбрасываем активный элемент
-      touchCount = 0;
     });
 
     // Обработчик события касания вторым пальцем
