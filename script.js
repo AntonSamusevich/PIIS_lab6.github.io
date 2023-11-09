@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.top = touch.clientY - offsetY + 'px';
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
+      else {
+        activeElement = null;
+      }
     });
 
     // Обработчик события завершения касания
