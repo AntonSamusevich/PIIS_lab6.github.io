@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const targets = document.querySelectorAll('.target'); 
   
   let activeElement = null; // Активный элемент
+  let flag = false; // Состояние перемещения элемента
   let offsetX, offsetY; // Смещение относительно курсора
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             left: target.style.left,
             top: target.style.top,
           };
-          activeElement.style.backgroundColor = 'red';
+          activeElement.style.backgroundColor = 'green';
         } else {
           touchStartTime = currentTime;
         }
@@ -52,8 +53,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
-      if (touchCount === 0) {
+      if (flag) {
+        flag = false; // Прерываем перетаскивание
+      } else {
         activeElement = null; // Сбрасываем активный элемент
+      }
+    });
+
+    // Обработчик события касания вторым пальцем
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && e.touches.length === 2) {
+        flag = false; // Прерываем перетаскивание
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null; // Сбрасываем активный элемент
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
     });
   });
