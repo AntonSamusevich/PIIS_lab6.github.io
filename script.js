@@ -14,14 +14,13 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       pressStartTime = currentTime;
-      activeElement = target;
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 2) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
-          //activeElement = target;
+          activeElement = target;
           startPosition = {
             left: target.style.left,
             top: target.style.top,
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       } else {
         touchCount = 0;
-        //activeElement = target;
+        activeElement = target;
         startPosition = {
           left: target.style.left,
           top: target.style.top,
@@ -83,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания вторым пальцем
     document.addEventListener('touchstart', (e) => {
       if (activeElement && e.touches.length === 2) {
-        flag = false; // Прерываем перетаскивание
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
         activeElement = null; // Сбрасываем активный элемент
