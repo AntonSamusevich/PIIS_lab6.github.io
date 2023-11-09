@@ -11,22 +11,18 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
-      const currentTime = new Date().getTime();
-      if (e.detail === 2) {
-        // Если e.detail равно 2, считаем это двойным нажатием
+      
+        touchCount = 0;
         activeElement = target;
         startPosition = {
           left: target.style.left,
           top: target.style.top,
         };
-        activeElement.style.backgroundColor = 'green';
-      } else {
-        activeElement = target;
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        e.preventDefault();
-      }
+        e.preventDefault(); 
+      
     });
 
     // Обработчик события движения при касании
