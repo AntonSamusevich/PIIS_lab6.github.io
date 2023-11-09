@@ -7,33 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
   let touchStartTime = 0; // Время начала первого касания
-  let timer;
 
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (touchCount === 0 || (currentTime - touchStartTime < 1000)) {
-        // Если прошло менее 1 секунды с начала первого касания, увеличиваем счетчик
-        touchCount++;
-        if (touchCount === 1) {
-          // Если счетчик равен 1, запускаем таймер на 1 секунду
-          timer = setTimeout(() => {
-            activeElement = target;
-            startPosition = {
-              left: target.style.left,
-              top: target.style.top,
-            };
-          }, 1000);
-        } else {
-          // Если счетчик достиг двух, считаем это двойным нажатием
-          touchCount = 0;
-          clearTimeout(timer); // Очищаем таймер, чтобы не сработал
-          activeElement.style.backgroundColor = 'green';
-        }
-      } else {
-        touchCount = 0;
-        clearTimeout(timer); // Очищаем таймер, чтобы не сработал
+      if (touchCount === 0) {
+        // Если touchCount равен 0, это первое касание
+        touchCount = 1;
         activeElement = target;
         startPosition = {
           left: target.style.left,
@@ -42,18 +23,42 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        e.preventDefault(); 
+
+        // Запускаем таймер для определения удержания пальца
+        setTimeout(() => {
+          if (touchCount === 1 && activeElement) {
+            // Если прошла секунда и палец все еще удерживается, разрешаем перемещение
+            flag = true;
+          }
+        }, 1000);
+      } else if (touchCount === 1 && currentTime - touchStartTime < 1000) {
+        // Если touchCount равен 1 и прошло менее 1 секунды с начала первого касания, считаем это двойным нажатием
+        touchCount = 0;
+        activeElement.style.backgroundColor = 'green';
+      } else {
+        // В остальных случаях сбрасываем touchCount и начинаем перемещение
+        touchCount = 0;
+        activeElement = target;
+        startPosition = {
+          left: target.style.left,
+          top: target.style.top,
+        };
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        flag = false; // Сбрасываем состояние перемещения
+        e.preventDefault();
       }
       touchStartTime = currentTime;
     });
-
+    
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
-      if (activeElement) {
+      if (activeElement && flag) {
         const touch = e.touches[0];
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
-        e.preventDefault(); // Предотвращаем дефолтное действие браузера
+        e.preventDefault();
       }
     });
 
