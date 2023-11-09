@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
+    
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         touchCount++;
         if (touchCount === 2) {
@@ -23,23 +24,23 @@ document.addEventListener('DOMContentLoaded', function () {
           };
           activeElement.style.backgroundColor = 'green';
         } else {
-          touchStartTime = currentTime;
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+          activeElement.style.backgroundColor = 'red';
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+          e.preventDefault();
         }
       } else {
         touchCount = 0;
-        activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
-        activeElement.style.backgroundColor = 'red';
-        const touch = e.touches[0];
-        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        e.preventDefault(); 
+        touchStartTime = currentTime;
       }
     });
-
+  
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
