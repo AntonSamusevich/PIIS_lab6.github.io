@@ -12,12 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
+      activeElement = targets;
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 2) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
+          activeElement = 0;
           activeElement = target;
           startPosition = {
             left: target.style.left,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       } else {
         touchCount = 0;
+        activeElement = 0;
         activeElement = target;
         startPosition = {
           left: target.style.left,
