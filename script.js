@@ -12,9 +12,44 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
+
+      if (currentTime - touchStartTime > 1000) {
+
+          touchCount = 0;
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+          e.preventDefault(); 
+        
+
+      } else {
+        touchStartTime = currentTime;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
+        touchStartTime = currentTime;
         if (touchCount === 2) {
           // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
