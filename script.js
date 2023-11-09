@@ -76,5 +76,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     });
+
+    // Обработчик события касания вторым пальцем
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && e.touches.length === 2) {
+        flag = false; // Прерываем перетаскивание
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null; // Сбрасываем активный элемент
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
+      }
+    });
   });
 });
