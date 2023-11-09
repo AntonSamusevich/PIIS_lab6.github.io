@@ -13,20 +13,18 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
-        // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 1) {
-          // Если счетчик достиг двух, считаем это двойным нажатием
-          touchCount = 0;
           activeElement = target;
           startPosition = {
             left: target.style.left,
             top: target.style.top,
           };
+        } else if (touchCount === 2) {
+          touchCount = 0;
           activeElement.style.backgroundColor = 'green';
-        } else {
-          touchStartTime = currentTime;
         }
+        touchStartTime = currentTime;
       } else {
         touchCount = 0;
         activeElement = target;
@@ -40,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault(); 
       }
     });
-
+    
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
