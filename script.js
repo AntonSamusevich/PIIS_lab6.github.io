@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
 
       if (currentTime - touchStartTime > 1000) {
-
-        
           touchCount = 0;
           activeElement = target;
           startPosition = {
@@ -27,10 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
           epreventDefault(); 
         }
-
-      else {
-        touchStartTime = currentTime;
-      }
+      
     });
 
     // Обработчик события движения при касании
