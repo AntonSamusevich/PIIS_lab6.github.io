@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-    
+      touchCount = 0;
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         touchCount++;
         if (touchCount === 2) {
@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
-        touchCount = null;
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
     });
