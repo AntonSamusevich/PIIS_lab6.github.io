@@ -7,26 +7,33 @@ document.addEventListener('DOMContentLoaded', function () {
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
   let touchStartTime = 0; // Время начала первого касания
+  let timer;
 
   targets.forEach(target => {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
+      if (touchCount === 0 || (currentTime - touchStartTime < 1000)) {
+        // Если прошло менее 1 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 1) {
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-        } else if (touchCount === 2) {
+          // Если счетчик равен 1, запускаем таймер на 1 секунду
+          timer = setTimeout(() => {
+            activeElement = target;
+            startPosition = {
+              left: target.style.left,
+              top: target.style.top,
+            };
+          }, 1000);
+        } else {
+          // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
+          clearTimeout(timer); // Очищаем таймер, чтобы не сработал
           activeElement.style.backgroundColor = 'green';
         }
-        touchStartTime = currentTime;
       } else {
         touchCount = 0;
+        clearTimeout(timer); // Очищаем таймер, чтобы не сработал
         activeElement = target;
         startPosition = {
           left: target.style.left,
@@ -37,8 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         e.preventDefault(); 
       }
+      touchStartTime = currentTime;
     });
-    
+
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
