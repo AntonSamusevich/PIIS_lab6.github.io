@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      touchCount = 0;
+
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         touchCount++;
+
         if (touchCount === 2) {
           touchCount = 0;
           activeElement = target;
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
           };
           activeElement.style.backgroundColor = 'green';
         } else {
+          touchStartTime = currentTime;
           activeElement = target;
           startPosition = {
             left: target.style.left,
@@ -31,13 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const touch = e.touches[0];
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-          e.preventDefault();
         }
-      } else {
-        touchStartTime = currentTime;
       }
     });
-  
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
@@ -51,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
       activeElement = null; // Сбрасываем активный элемент
+      touchCount = 0;
     });
 
     // Обработчик события касания вторым пальцем
