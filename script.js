@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         activeElement.style.left = touch.clientX - offsetX + 'px';
         activeElement.style.top = touch.clientY - offsetY + 'px';
-        e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
       else {
         activeElement = null;
@@ -58,25 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
-      const currentTime = new Date().getTime();
-      if (flag) {
-        flag = false; // Прерываем перетаскивание
-      } else {
-        if (currentTime - pressStartTime > 1000) {
-          // Если удерживали палец более одной секунды, разрешаем перемещение элемента после свайпа
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-          e.preventDefault();
-        } else {
-          activeElement = null; // Сбрасываем активный элемент
-        }
-      }
+      activeElement = null; // Сбрасываем активный элемент
     });
 
     // Обработчик события касания вторым пальцем
@@ -85,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
         activeElement = null; // Сбрасываем активный элемент
-        e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
     });
   });
