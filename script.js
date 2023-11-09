@@ -11,10 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         touchCount++;
-
         if (touchCount === 2) {
           touchCount = 0;
           activeElement = target;
@@ -25,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
           activeElement.style.backgroundColor = 'green';
         } else {
           touchStartTime = currentTime;
+        }
+        } else {
           activeElement = target;
           startPosition = {
             left: target.style.left,
@@ -33,9 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
           const touch = e.touches[0];
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        }
-      }
+          e.preventDefault();
+      } 
     });
+  
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
