@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let pressStartTime = 0; // Время начала удержания пальца
 
   targets.forEach(target => {
-
-    // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       pressStartTime = currentTime;
@@ -23,10 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         e.preventDefault();
-      } 
+      }
     });
 
-    // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement) {
         const touch = e.touches[0];
@@ -36,9 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
-      activeElement = null; // Сбрасываем активный элемент
+      activeElement = null;
     });
   });
 });
