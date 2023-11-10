@@ -29,15 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           touchStartTime = currentTime;
         }
-      } else {
-        touchCount = 0;
-        activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
-        e.preventDefault();
-      }
+      } 
     }
     });
 
