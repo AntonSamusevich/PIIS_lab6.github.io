@@ -14,15 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
-        if (touchCount === 2) {
-          // Если счетчик достиг двух, считаем это двойным нажатием
+        if (touchCount === 2 && activeElement === target) {
+          // Если счетчик достиг двух и это касание на активном элементе, считаем это двойным нажатием
           touchCount = 0;
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-          activeElement.style.backgroundColor = 'green';
           followingFinger = true; // Устанавливаем флаг "следования за пальцем"
           
           // Получаем координаты точки нажатия
@@ -51,12 +45,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
+      if (followingFinger && activeElement) {
+        followingFinger = false; // Сбрасываем флаг "следования за пальцем"
+      }
       if (activeElement) {
         activeElement.style.transition = ''; // Сбрасываем анимацию
         activeElement = null; // Сбрасываем активный элемент
-        if (followingFinger) {
-          followingFinger = false; // Сбрасываем флаг "следования за пальцем"
-        }
       }
     });
 
