@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
-      if (flag && activeElement) {
+      if (flag2 && activeElement) {
         const touch = e.touches[0];
         // Перемещение элемента к точке нажатия
         activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
