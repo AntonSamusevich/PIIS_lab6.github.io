@@ -50,23 +50,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Обработчик события завершения касания
-document.addEventListener('touchend', (e) => {
-  if (activeElement) {
-    if (e.changedTouches.length > 0) {
-      const touch = e.changedTouches[0];
-      // Перемещение элемента к точке отпускания пальца
-      activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
-      activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
-      activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
-    }
-    e.preventDefault(); // Предотвращаем дефолтное действие браузера
-  }
-});
-
+    document.addEventListener('touchend', (e) => {
+      if (flag && activeElement) {
+        if (e.changedTouches.length > 0) {
+          const touch = e.changedTouches[0];
+          // Перемещение элемента к точке отпускания пальца
+          activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+          activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
+          activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
+        }
+        e.preventDefault(); // Предотвращаем дефолтное действие браузера
+      }
+    });
 
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
-      if (followingFinger && activeElement) {
+      if (flag && activeElement) {
         const touch = e.touches[0];
         // Перемещение элемента к точке нажатия
         activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
