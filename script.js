@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
-      if (activeElement) {
+      if (followingFinger && activeElement) {
         const touch = e.touches[0];
         // Перемещение элемента к точке нажатия
         activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
