@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Обработчик события завершения касания
-    document.addEventListener('touchend', (e) => {
-      if (flag && activeElement) {
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement) {
         if (e.changedTouches.length > 0) {
           const touch = e.changedTouches[0];
           // Перемещение элемента к точке отпускания пальца
