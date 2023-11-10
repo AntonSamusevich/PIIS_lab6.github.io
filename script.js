@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
           };
           activeElement.style.backgroundColor = 'green';
           flag1 = true; // Устанавливаем флаг "следования за пальцем"
-          flag3 = false;
         } else {
           touchStartTime = currentTime;
         }
@@ -49,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.left = targetX + 'px';
         activeElement.style.top = targetY + 'px';
         flag2 = true;
+        flag3 = false;
       }
     });
 
