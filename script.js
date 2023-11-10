@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    
     document.addEventListener('touchstart', (e) => {
       if (flag2 && activeElement) {
         if (e.changedTouches.length > 0) {
@@ -59,17 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
           activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
           activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
         }
-        holdTimer = setTimeout(() => {
-          // Очищаем таймер и прекращаем следование за пальцем
-          clearTimeout(holdTimer);
-        }, 2000);
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
-      }
-    });
-
-    document.addEventListener('touchend', () => {
-      if (activeElement) {
-        clearTimeout(holdTimer);
       }
     });
 
