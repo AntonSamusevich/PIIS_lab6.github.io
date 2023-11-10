@@ -52,17 +52,27 @@ document.addEventListener('DOMContentLoaded', function () {
     
     document.addEventListener('touchstart', (e) => {
       if (flag2 && activeElement) {
-        if (e.changedTouches.length > 0) {
+        let holdTimer;
+    
+        // Установим таймер на удержание в 1000 миллисекунд (1 секунда)
+        holdTimer = setTimeout(() => {
           const touch = e.changedTouches[0];
           // Перемещение элемента к точке отпускания пальца
           activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
           activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
           activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
-        }
+          clearTimeout(holdTimer); // Очищаем таймер после перемещения элемента
+        }, 1000); // 1000 миллисекунд = 1 секунда
+    
+        // Обработчик события отпускания пальца
+        document.addEventListener('touchend', () => {
+          clearTimeout(holdTimer); // Очищаем таймер при отпускании пальца
+        });
+    
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
       }
     });
-
+    
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (flag2 && activeElement) {
