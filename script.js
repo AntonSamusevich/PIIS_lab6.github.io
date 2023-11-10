@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
           activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
           activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
           clearTimeout(holdTimer); // Очищаем таймер после перемещения элемента
-        }, 1000); // 1000 миллисекунд = 1 секунда
+        }, 3000); // 1000 миллисекунд = 1 секунда
     
         // Обработчик события отпускания пальца
         document.addEventListener('touchend', () => {
