@@ -49,15 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Обработчик события завершения касания
-    document.addEventListener('touchend', (e) => {
-      if (activeElement) {
-        activeElement.style.transition = ''; // Сбрасываем анимацию
-        activeElement = null; // Сбрасываем активный элемент
-        
-      }
-    });
-
+    
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (followingFinger && activeElement) {
