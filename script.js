@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
+      touchStartTime = currentTime;
 
       if (currentTime - touchStartTime > 1000) {
         touchCount = 0;
@@ -53,16 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
       activeElement = null; // Сбрасываем активный элемент
-    });
-
-    // Обработчик события касания вторым пальцем
-    document.addEventListener('touchstart', (e) => {
-      if (activeElement && e.touches.length === 2) {
-        activeElement.style.left = startPosition.left;
-        activeElement.style.top = startPosition.top;
-        activeElement = null; // Сбрасываем активный элемент
-        e.preventDefault(); // Предотвращаем дефолтное действие браузера
-      }
     });
   });
 });
