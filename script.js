@@ -67,6 +67,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
+    document.addEventListener('touchend', () => {
+      if (activeElement) {
+        clearTimeout(holdTimer);
+        activeElement.style.transition = '';
+        activeElement = null;
+      }
+    });
+
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (flag2 && activeElement) {
