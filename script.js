@@ -49,20 +49,20 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchend', (e) => {
-      if (followingFinger && activeElement) {
-        followingFinger = false; // Сбрасываем флаг "следования за пальцем"
-      }
-      if (activeElement) {
-        activeElement.style.transition = ''; // Сбрасываем анимацию
-        if (lastPosition) {
-          // Восстанавливаем последнюю позицию после touchend
-          activeElement.style.left = lastPosition.left;
-          activeElement.style.top = lastPosition.top;
-        }
-        activeElement = null; // Сбрасываем активный элемент
-      }
-    });
+    // Обработчик события завершения касания
+document.addEventListener('touchend', (e) => {
+  if (activeElement) {
+    if (e.changedTouches.length > 0) {
+      const touch = e.changedTouches[0];
+      // Перемещение элемента к точке отпускания пальца
+      activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+      activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
+      activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
+    }
+    e.preventDefault(); // Предотвращаем дефолтное действие браузера
+  }
+});
+
 
     // Обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
