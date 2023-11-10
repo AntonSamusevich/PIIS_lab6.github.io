@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let activeElement = null; // Активный элемент
   let flag1 = false; // Состояние "следования за пальцем"
   let flag2 = false;
+  let flag3 = true;
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
   let touchStartTime = 0; // Время начала первого касания
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Обработчик события касания начала
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      if (activeElement = null) {
+      if (flag3) {
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
         // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
           };
           activeElement.style.backgroundColor = 'green';
           flag1 = true; // Устанавливаем флаг "следования за пальцем"
+          flag3 = false;
         } else {
           touchStartTime = currentTime;
         }
@@ -50,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Обработчик события завершения касания
+    
     document.addEventListener('touchstart', (e) => {
       if (flag2 && activeElement) {
         if (e.changedTouches.length > 0) {
