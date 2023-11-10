@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (flag2 && activeElement) {
         const touch = e.touches[0];
         // Перемещение элемента к точке нажатия
+        activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
         activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
         activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
