@@ -14,10 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       pressStartTime = currentTime;
       if (touchCount === 0 || (currentTime - touchStartTime < 300)) {
-        // Если прошло менее 0.3 секунды с начала первого касания, увеличиваем счетчик
         touchCount++;
         if (touchCount === 2) {
-          // Если счетчик достиг двух, считаем это двойным нажатием
           touchCount = 0;
           activeElement = target;
           startPosition = {
@@ -25,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             top: target.style.top,
           };
           activeElement.style.backgroundColor = 'green';
-          flag = true; // Устанавливаем флаг "преследования"
+          flag = true; 
         } else {
           touchStartTime = currentTime;
         }
@@ -49,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         if (flag) {
           // Если установлен флаг "преследования", перемещаем элемент
+          activeElement.style.left = touch.clientX - offsetX + 'px';
+          activeElement.style.top = touch.clientY - offsetY + 'px';
+          e.preventDefault(); // Предотвращаем дефолтное действие браузера
+        }
+        else {
           activeElement.style.left = touch.clientX - offsetX + 'px';
           activeElement.style.top = touch.clientY - offsetY + 'px';
           e.preventDefault(); // Предотвращаем дефолтное действие браузера
