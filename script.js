@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('touchend', () => {
       if (activeElement) {
         clearTimeout(holdTimer);
-        activeElement.style.transition = '';
-        activeElement = null;
       }
     });
 
