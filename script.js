@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const targets = document.querySelectorAll('.target');
 
   let activeElement = null; // Активный элемент
-  let followingFinger = false; // Состояние "следования за пальцем"
+  let flag = false; // Состояние "следования за пальцем"
   let startPosition = null; // Исходная позиция элемента
   let touchCount = 0; // Счетчик касаний
   let touchStartTime = 0; // Время начала первого касания
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             top: target.style.top,
           };
           activeElement.style.backgroundColor = 'green';
-          followingFinger = true; // Устанавливаем флаг "следования за пальцем"
+          flag = true; // Устанавливаем флаг "следования за пальцем"
           
           // Получаем координаты точки нажатия
           const touch = e.touches[0];
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик события завершения касания
     document.addEventListener('touchstart', (e) => {
-      if (activeElement) {
+      if (flag && activeElement) {
         if (e.changedTouches.length > 0) {
           const touch = e.changedTouches[0];
           // Перемещение элемента к точке отпускания пальца
