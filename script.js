@@ -49,15 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Обработчик события завершения касания
     document.addEventListener('touchend', (e) => {
       if (followingFinger && activeElement) {
-        const touch = e.touches[0];
-        // Перемещение элемента к точке нажатия
-        activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
-        activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
-        e.preventDefault(); // Предотвращаем дефолтное действие браузера
-        
+        followingFinger = false; // Сбрасываем флаг "следования за пальцем"
+      }
+      if (activeElement) {
+        activeElement.style.transition = ''; // Сбрасываем анимацию
+        if (lastPosition) {
+          // Восстанавливаем последнюю позицию после touchend
+          activeElement.style.left = lastPosition.left;
+          activeElement.style.top = lastPosition.top;
+        }
+        activeElement = null; // Сбрасываем активный элемент
       }
     });
 
