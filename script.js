@@ -13,23 +13,29 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
-      if (touchCount == 2) {
-        touchCount == 0;
+    
+      // Проверка на двойное нажатие
+      if (touchCount === 2) {
+        touchCount = 0;
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
         activeElement = null;
       }
+    
       holdTimer = setTimeout(() => {
-        activeElement = target;
-        startPosition = {
-          left: target.style.left,
-          top: target.style.top,
-        };
-        const touch = e.touches[0];
-        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        if (activeElement === null) {
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        }
       }, 500);
-        e.preventDefault(); 
+      
+      e.preventDefault();
     });
 
     document.addEventListener('touchmove', (e) => {
@@ -43,14 +49,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchend', (e) => {
       clearTimeout(holdTimer);
-      clearTimeout(holdTimer); 
+    
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300) {
+    
+      if (touchDuration < 300 && activeElement !== null) {
         touchCount++;
-      }
-      else {
-        activeElement = null; 
+      } else {
+        activeElement = null;
       }
     });
 
