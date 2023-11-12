@@ -15,12 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
     
-      if (touchCount === 1) {
-        touchCount = 0;
-        activeElement = target;
-        activeElement.style.backgroundColor = 'green';
-      }
-
       holdTimer = setTimeout(() => {
         activeElement = target;
         startPosition = {
@@ -49,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
-        touchCount++;
+        activeElement = target;
+        activeElement.style.backgroundColor = 'green';
       } else {
       activeElement = null;
       }
