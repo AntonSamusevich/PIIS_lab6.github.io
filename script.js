@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
+      if (touchCount == 2) {
+        touchCount == 0;
+        activeElement = target;
+        activeElement.style.backgroundColor = 'green';
+        activeElement = null;
+      }
       holdTimer = setTimeout(() => {
         activeElement = target;
         startPosition = {
@@ -36,8 +42,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('touchend', (e) => {
-      activeElement = null; 
       clearTimeout(holdTimer);
+      clearTimeout(holdTimer); 
+      const currentTime = new Date().getTime();
+      const touchDuration = currentTime - touchStartTime;
+      if (touchDuration < 300) {
+        touchCount++;
+      }
+      else {
+        activeElement = null; 
+      }
     });
 
     document.addEventListener('touchstart', (e) => {
