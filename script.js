@@ -9,32 +9,53 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
-      const elapsed = currentTime - touchStartTime;
+      const touchDuration = currentTime - touchStartTime;
 
-      if (elapsed < 300) {
-        // Если прошло менее 300 миллисекунд, считаем это быстрым двойным нажатием
+      if (touchDuration < 300) {
         clickCount++;
       } else {
-        // В противном случае начинаем отсчет заново
         clickCount = 1;
       }
 
       touchStartTime = currentTime;
 
-      // Ожидаем 300 миллисекунд для следующего нажатия
       holdTimer = setTimeout(() => {
         if (clickCount === 2) {
-          // Ваш код для обработки быстрого двойного нажатия
           activeElement = target;
-          activeElement.style.backgroundColor = 'blue';
-          console.log('Быстрое двойное нажатие');
+          activeElement.style.backgroundColor = 'green';
         }
-
-        // Сбрасываем счетчик
         clickCount = 0;
       }, 300);
 
+      if (clickCount === 1) {
+
+        holdTimer = setTimeout(() => {
+          activeElement = e.target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+          clickCount = 0
+        }, 500);
+      }
+
       e.preventDefault();
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (activeElement) {
+        const touch = e.touches[0];
+        activeElement.style.left = touch.clientX - offsetX + 'px'; 
+        activeElement.style.top = touch.clientY - offsetY + 'px';
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('touchend', (e) => {
+      activeElement = null;
     });
   });
 });
