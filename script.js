@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
-
-      activeElement = target;
     
       if (touchCount == 1) {
         touchCount = 0;
+        activeElement = target;
         activeElement.style.backgroundColor = 'green';
       } else {
 
       holdTimer = setTimeout(() => {
+        activeElement = target;
         startPosition = {
           left: target.style.left,
            top: target.style.top,
