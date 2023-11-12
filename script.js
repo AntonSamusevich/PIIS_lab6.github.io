@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
     
-      if (touchCount == 2) {
+      if (touchCount === 1) {
         touchCount = 0;
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
