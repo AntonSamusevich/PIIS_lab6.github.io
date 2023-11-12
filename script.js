@@ -14,19 +14,18 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
     
+      activeElement = target;
+
       holdTimer = setTimeout(() => {
-        
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        
+        startPosition = {
+          left: target.style.left,
+           top: target.style.top,
+        };
+        const touch = e.touches[0];
+        offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+        offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }, 1000);
-    
+
       e.preventDefault();
     });
 
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
-        activeElement = target;
         activeElement.style.backgroundColor = 'green';
       }
       activeElement = null;
