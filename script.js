@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
       touchStartTime = currentTime;
     
       holdTimer = setTimeout(() => {
-        activeElement = target;
         startPosition = {
           left: target.style.left,
            top: target.style.top,
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      }, 1000);
+      }, 500);
 
       e.preventDefault();
     });
@@ -41,10 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300 && activeElement != null) {
-        activeElement = target;
+      if (touchDuration < 300) {
         activeElement.style.backgroundColor = 'green';
+        activeElement = target;
       }
+      activeElement = null;
     });
 
     document.addEventListener('touchstart', (e) => {
