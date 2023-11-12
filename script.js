@@ -37,11 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchend', (e) => {
-      clearTimeout(holdTimer);
+    target.addEventListener('touchend', () => {
+      clearTimeout(holdTimer); 
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300 && activeElement != null) {
+
+      if (touchDuration < 300) {
+        
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
       }
