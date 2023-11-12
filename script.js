@@ -29,26 +29,41 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
     });
 
-    
+    document.addEventListener('touchmove', (e) => {
+      if (activeElement) {
+        const touch = e.touches[0];
+        activeElement.style.left = touch.clientX - offsetX + 'px'; 
+        activeElement.style.top = touch.clientY - offsetY + 'px';
+        e.preventDefault();
+      }
+    });
 
     document.addEventListener('touchend', (e) => {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchCount == 1) {
+      if (touchCount === 1) {
         touchCount = 0;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
         activeElement = null;
       }
       else if (touchDuration < 300) {
-        touchCount++;
+        touchCount = 1;
+        flag = true;
       } else {
         touchCount = 0;
         activeElement = null;
       }
     });
 
-    
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && e.touches.length === 2) {
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null; 
+        e.preventDefault(); 
+      }
+    });
   });
 });
