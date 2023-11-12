@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
     
     target.addEventListener('touchstart', (e) => {
+      const currentTime = new Date().getTime();
+      touchStartTime = currentTime;
+      holdTimer = setTimeout(() => {
         activeElement = target;
         startPosition = {
           left: target.style.left,
@@ -19,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+      },2000);
         e.preventDefault(); 
     });
 
@@ -33,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchend', (e) => {
       activeElement = null; 
+      clearTimeout(holdTimer);
     });
 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && e.touches.length === 2) {
-        flag = false; // Прерываем перетаскивание
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
         activeElement = null; 
