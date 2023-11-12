@@ -20,10 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
     });
 
-    target.addEventListener('touchmove', (e) => {
-      clearTimeout(holdTimer); // Очищаем таймер при движении
-    });
-
     target.addEventListener('touchend', () => {
       clearTimeout(holdTimer); // Очищаем таймер при отпускании
       const currentTime = new Date().getTime();
