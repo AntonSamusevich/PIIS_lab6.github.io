@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
 
+      const touchDuration = currentTime - touchStartTime;
+      if (touchDuration < 300) {
+        activeElement.style.backgroundColor = 'green';
+        activeElement = target;
+      } else {
+
       holdTimer = setTimeout(() => {
       activeElement = target;
       startPosition = {
@@ -21,13 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }, 300);
-
-      const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300) {
-        activeElement.style.backgroundColor = 'green';
-        activeElement = target;
-      }
-
+    }
       e.preventDefault(); 
     });
   });
