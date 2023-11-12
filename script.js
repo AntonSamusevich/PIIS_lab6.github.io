@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
-      } 
+      } else {
       activeElement = null;
+      }
     });
 
     document.addEventListener('touchstart', (e) => {
