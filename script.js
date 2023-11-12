@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const touch = e.touches[0];
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      }, 500);
-      activeElement = null;
+      }, 300);
+      
       e.preventDefault(); 
     });
   });
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const touch = e.touches[0];
       activeElement.style.left = touch.clientX - offsetX + 'px'; 
       activeElement.style.top = touch.clientY - offsetY + 'px';
+      activeElement = null;
       e.preventDefault(); 
     }
   });
