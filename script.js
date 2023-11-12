@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('touchstart', (e) => {
       if (flag == true && activeElement) {
         
+        document.body.style.backgroundColor = '';
         const touch = e.touches[0];
         const targetRect = activeElement.getBoundingClientRect();
         const targetX = touch.clientX - targetRect.width / 2;
