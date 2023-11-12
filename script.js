@@ -53,8 +53,5 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchend', (e) => {
-      activeElement = null;
-    });
   });
 });
