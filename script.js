@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }, 500);
+      activeElement = null;
       e.preventDefault(); 
     });
   });
