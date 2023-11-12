@@ -49,8 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
         touchCount++;
-      }
+      } else {
       activeElement = null;
+      }
     });
 
     document.addEventListener('touchstart', (e) => {
