@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     target.addEventListener('touchstart', (e) => {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
-    
+
       holdTimer = setTimeout(() => {
         activeElement = target;
         startPosition = {
@@ -23,9 +23,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      }, 1000);
+        
+      }, 1000); 
 
       e.preventDefault();
+    });
+
+    target.addEventListener('touchmove', (e) => {
+      clearTimeout(holdTimer); // Очищаем таймер при движении
     });
 
     document.addEventListener('touchmove', (e) => {
@@ -41,12 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer); 
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-
       if (touchDuration < 300) {
         
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
-      }
+      } 
+      activeElement = null;
     });
 
     document.addEventListener('touchstart', (e) => {
