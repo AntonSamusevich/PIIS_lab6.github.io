@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const touchDuration = currentTime - touchStartTime;
       if (touchCount == 1) {
         touchCount = 0;
-        activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
         flag = true;
       }
