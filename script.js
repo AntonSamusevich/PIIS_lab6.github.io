@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
   targets.forEach(target => {
 
     target.addEventListener('touchstart', (e) => {
+      const currentTime = new Date().getTime();
+      touchStartTime = currentTime;
+
+      holdTimer = setTimeout(() => {
       activeElement = target;
       startPosition = {
         left: target.style.left,
@@ -16,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const touch = e.touches[0];
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+      }, 500);
       e.preventDefault(); 
     });
   });
@@ -29,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Обработчик события завершения касания
   document.addEventListener('touchend', (e) => {
     activeElement = null; 
   });
