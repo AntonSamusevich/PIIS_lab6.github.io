@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let touchStartTime = 0;
   let holdTimer = null;
   let clickCount = 0;
-  let offsetX, offsetY, startPosition;
 
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
@@ -28,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
         clickCount = 0;
       }, 300);
 
-      holdTimer = setTimeout(() => {
-        if (clickCount === 1) {
+        holdTimer = setTimeout(() => {
+          if (clickCount === 1) {
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -39,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }
-        clickCount = 0;
-      }, 300);
+          clickCount = 0
+        }, 500);
 
       e.preventDefault();
     });
