@@ -36,9 +36,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
       e.preventDefault();
     });
-
-    target.addEventListener('touchend', () => {
-      clearTimeout(holdTimer); // Очищаем таймер при отпускании
-    });
   });
 });
