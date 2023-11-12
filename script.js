@@ -14,27 +14,25 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       touchStartTime = currentTime;
     
-      // Проверка на двойное нажатие
-      if (touchCount === 2) {
+      if (touchCount === 1) {
         touchCount = 0;
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
-        activeElement = null;
+      } else {
+        holdTimer = setTimeout(() => {
+          if (activeElement === null) {
+            activeElement = target;
+            startPosition = {
+              left: target.style.left,
+              top: target.style.top,
+            };
+            const touch = e.touches[0];
+            offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+            offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+          }
+        }, 500);
       }
     
-      holdTimer = setTimeout(() => {
-        if (activeElement === null) {
-          activeElement = target;
-          startPosition = {
-            left: target.style.left,
-            top: target.style.top,
-          };
-          const touch = e.touches[0];
-          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        }
-      }, 500);
-      
       e.preventDefault();
     });
 
@@ -53,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
     
-      if (touchDuration < 300 && activeElement !== null) {
-        touchCount++;
+      if (touchDuration < 300) {
+        activeElement.style.backgroundColor = 'green';
       } else {
         activeElement = null;
       }
