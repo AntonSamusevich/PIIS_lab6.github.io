@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (touchDuration < 300) {
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
-      } else {
+      } 
       activeElement = null;
-      }
+      
     });
 
     document.addEventListener('touchstart', (e) => {
