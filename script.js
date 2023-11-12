@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300) {
+      if (touchDuration < 300 && activeElement != null) {
         activeElement.style.backgroundColor = 'green';
       }
       activeElement = null;
