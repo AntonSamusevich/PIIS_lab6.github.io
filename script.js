@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
       if (touchCount == 1) {
         touchCount = 0;
-        activeElement = target;
         activeElement.style.backgroundColor = 'green';
       } else {
 
