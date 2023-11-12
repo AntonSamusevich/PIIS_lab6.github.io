@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchCount == 1) {
-        touchCount++;
+      if (touchCount == 2) {
+        touchCount = 0;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
         activeElement = null;
@@ -51,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
       else if (touchDuration < 300) {
         touchCount++;
       } else {
-      activeElement = null;
+        touchCount = 0;
+        activeElement = null;
       }
     });
 
