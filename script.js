@@ -42,18 +42,33 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchCount === 1) {
+      if (touchCount == 1) {
         touchCount = 0;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
         activeElement = null;
       }
       else if (touchDuration < 300) {
-        touchCount = 1;
+        touchCount++;
         flag = true;
       } else {
         touchCount = 0;
         activeElement = null;
+      }
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      if (flag == true && activeElement) {
+        
+        const touch = e.touches[0];
+        const targetRect = activeElement.getBoundingClientRect();
+        const targetX = touch.clientX - targetRect.width / 2;
+        const targetY = touch.clientY - targetRect.height / 2;
+
+        activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+        activeElement.style.left = targetX + 'px';
+        activeElement.style.top = targetY + 'px';
+        
       }
     });
 
