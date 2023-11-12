@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
       touchStartTime = currentTime;
     
       holdTimer = setTimeout(() => {
-        if (activeElement === null) {
+        
           activeElement = target;
           startPosition = {
             left: target.style.left,
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const touch = e.touches[0];
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        }
+        
       }, 1000);
     
       e.preventDefault();
