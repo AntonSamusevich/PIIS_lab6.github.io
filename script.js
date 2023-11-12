@@ -21,7 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
       offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
       offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
       }, 300);
-      
+
+      const touchDuration = currentTime - touchStartTime;
+      if (touchDuration < 300) {
+        activeElement.style.backgroundColor = 'green';
+        activeElement = target;
+      }
+
       e.preventDefault(); 
     });
   });
@@ -31,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const touch = e.touches[0];
       activeElement.style.left = touch.clientX - offsetX + 'px'; 
       activeElement.style.top = touch.clientY - offsetY + 'px';
-      activeElement = null;
       e.preventDefault(); 
     }
   });
