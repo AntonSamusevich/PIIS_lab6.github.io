@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let flag = false; 
   let offsetX, offsetY; 
   let startPosition = null; 
-  let touchCount = 0; 
+  let touchCount = false; 
   let touchStartTime = 0; 
   let holdTimer = null;
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-        touchCount = 0;
+        activeElement.style.backgroundColor = 'red';
       }, 500);
 
       e.preventDefault();
@@ -43,16 +43,16 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchCount == 1) {
+      if (touchCount == true) {
         touchCount = 0;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
         activeElement = null;
       }
       else if (touchDuration < 300) {
-        touchCount++;
+        touchCount = true
       } else {
-        touchCount = 0;
+        touchCount = false;
         activeElement = null;
       }
     });
