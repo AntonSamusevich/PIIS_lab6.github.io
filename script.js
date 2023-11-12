@@ -27,9 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
         clickCount = 0;
       }, 300);
 
-      if (clickCount === 1) {
-
         holdTimer = setTimeout(() => {
+          if (clickCount === 1) {
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -38,9 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const touch = e.touches[0];
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        }
           clickCount = 0
         }, 500);
-      }
 
       e.preventDefault();
     });
