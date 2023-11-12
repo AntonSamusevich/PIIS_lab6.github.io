@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const touch = e.touches[0];
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-      },2000);
+      }, 500);
         e.preventDefault(); 
     });
 
