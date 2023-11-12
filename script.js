@@ -42,12 +42,17 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(holdTimer);
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
-      if (touchDuration < 300) {
+      if (touchCount == 1) {
+        touchCount++;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
-      } 
+        activeElement = null;
+      }
+      else if (touchDuration < 300) {
+        touchCount++;
+      } else {
       activeElement = null;
-      
+      }
     });
 
     document.addEventListener('touchstart', (e) => {
