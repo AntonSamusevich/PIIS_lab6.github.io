@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
         offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         
-      }, 1000); 
+      }, 500); 
 
       e.preventDefault();
     });
@@ -47,12 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
-        
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
-      } else {
-      activeElement = null;
-      }
+      } 
     });
 
     document.addEventListener('touchstart', (e) => {
