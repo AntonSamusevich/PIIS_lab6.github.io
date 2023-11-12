@@ -49,16 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    
     document.addEventListener('touchstart', (e) => {
+      const currentTime = new Date().getTime();
       touchStartTime = currentTime;
+    
       if (flag2 && activeElement) {
         if (e.changedTouches.length > 0) {
           holdTimer = setTimeout(() => {
-          const touch = e.changedTouches[0];
-          activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
-          activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
-          activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
+            // Ваш код для обработки удержания
+            const touch = e.changedTouches[0];
+            activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+            activeElement.style.left = touch.clientX - activeElement.offsetWidth / 2 + 'px';
+            activeElement.style.top = touch.clientY - activeElement.offsetHeight / 2 + 'px';
           }, 2000);
         }
         e.preventDefault(); // Предотвращаем дефолтное действие браузера
