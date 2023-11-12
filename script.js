@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchend', (e) => {
       clearTimeout(holdTimer);
-      const currentTime = new Date().getTime();
+      currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
         touchCount++;
