@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let activeElement = null;
   let touchStartTime = 0;
   let holdTimer = null;
-  let clickCount = 0;
-  let offsetX, offsetY, startPosition;
+  let touchCount = 0;
+  let offsetX, offsetY;
+  let startPosition = null; 
 
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
@@ -13,18 +14,22 @@ document.addEventListener('DOMContentLoaded', function () {
       const touchDuration = currentTime - touchStartTime;
 
       if (touchDuration < 300) {
-        clickCount++;
+        touchCountt++;
       } else {
-        clickCount = 1;
+        touchCount = 1;
       }
 
       touchStartTime = currentTime;
 
       holdTimer = setTimeout(() => {
-        if (clickCount === 2) {
+        if (touchCountt === 2) {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
-        } else if (clickCount === 1) {
+        } 
+      }, 300);
+
+      holdTimer = setTimeout(() => {
+        if (touchCount === 1) {
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -34,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }
-        clickCount = 0;
+        touchCount = 0;
       }, 300);
 
       e.preventDefault();
