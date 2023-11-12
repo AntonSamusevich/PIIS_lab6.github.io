@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
       if (touchDuration < 300) {
+        activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
       } else {
       activeElement = null;
