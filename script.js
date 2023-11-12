@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let activeElement = null;
   let touchStartTime = 0;
   let holdTimer = null;
-  let touchCount = 0;
-  let offsetX, offsetY;
-  let startPosition = null; 
+  let clickCount = 0;
+  let offsetX, offsetY, startPosition;
 
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
@@ -14,22 +13,23 @@ document.addEventListener('DOMContentLoaded', function () {
       const touchDuration = currentTime - touchStartTime;
 
       if (touchDuration < 300) {
-        touchCountt++;
+        clickCount++;
       } else {
-        touchCount = 1;
+        clickCount = 1;
       }
 
       touchStartTime = currentTime;
 
       holdTimer = setTimeout(() => {
-        if (touchCountt === 2) {
+        if (clickCount === 2) {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
-        } 
+        }
+        clickCount = 0;
       }, 300);
 
       holdTimer = setTimeout(() => {
-        if (touchCount === 1) {
+        if (clickCount === 1) {
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }
-        touchCount = 0;
+        clickCount = 0;
       }, 300);
 
       e.preventDefault();
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchend', () => {
+    document.addEventListener('touchend', (e) => {
       activeElement = null;
     });
   });
