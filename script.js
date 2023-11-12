@@ -20,7 +20,7 @@
           activeElement = e.target;
           activeElement.style.backgroundColor = 'green';
           flag = true;
-        }
+        } else {
 
         holdTimer = setTimeout(() => {
           activeElement = e.target;
@@ -32,7 +32,7 @@
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }, 500);
-
+      }
         e.preventDefault();
       });
 
@@ -60,7 +60,6 @@
       document.addEventListener('touchstart', (e) => {
         if (flag == true && activeElement) {
           
-          document.body.style.backgroundColor = 'white';
           const touch = e.touches[0];
           const targetRect = activeElement.getBoundingClientRect();
           const targetX = touch.clientX - targetRect.width / 2;
