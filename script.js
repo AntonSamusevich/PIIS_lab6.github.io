@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let startPosition = null; 
   let touchCount = 0; 
   let touchStartTime = 0; 
+  let holdTimer = null;
 
   targets.forEach(target => {
     
