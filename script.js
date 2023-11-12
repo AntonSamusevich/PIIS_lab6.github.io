@@ -18,20 +18,20 @@ document.addEventListener('DOMContentLoaded', function () {
         touchCount = 0;
         activeElement = target;
         activeElement.style.backgroundColor = 'green';
-      } else {
-        holdTimer = setTimeout(() => {
-          if (activeElement === null) {
-            activeElement = target;
-            startPosition = {
-              left: target.style.left,
-              top: target.style.top,
-            };
-            const touch = e.touches[0];
-            offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
-            offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
-          }
-        }, 500);
-      }
+      } 
+
+      holdTimer = setTimeout(() => {
+        if (activeElement === null) {
+          activeElement = target;
+          startPosition = {
+            left: target.style.left,
+            top: target.style.top,
+          };
+          const touch = e.touches[0];
+          offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
+          offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+        }
+      }, 500);
     
       e.preventDefault();
     });
