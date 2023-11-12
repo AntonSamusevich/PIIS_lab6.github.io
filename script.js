@@ -46,11 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
         touchCount = 0;
         activeElement = e.target;
         activeElement.style.backgroundColor = 'green';
-        activeElement = null;
+        flag = true;
       }
       else if (touchDuration < 300) {
         touchCount++;
-        flag = true;
       } else {
         touchCount = 0;
         activeElement = null;
