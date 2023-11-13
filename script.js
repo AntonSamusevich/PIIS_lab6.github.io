@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
-            flag = true; // Устанавливаем флаг в true после перемещения
+           
           }
     
           clickCount = 0;
