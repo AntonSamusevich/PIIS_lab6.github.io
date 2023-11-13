@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetX = touch.clientX - targetRect.width / 2;
             const targetY = touch.clientY - targetRect.height / 2;
     
-            activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
             flag = true; 
@@ -88,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
-        activeElement.style.transition = 'none';
         activeElement.style.backgroundColor = 'red';
         activeElement = null;
       } else {
