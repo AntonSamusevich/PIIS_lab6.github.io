@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
+        activeElement.style.transition = 'none';
         activeElement.style.backgroundColor = 'red';
         activeElement = null;
         flag = false;
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && e.touches.length === 2) {
+        activeElement.style.transition = 'none';
         activeElement.style.backgroundColor = 'red';
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
