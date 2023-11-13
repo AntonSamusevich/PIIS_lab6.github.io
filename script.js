@@ -44,14 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
     });
 
-    document.addEventListener('touchmove', (e) => {
-      if (activeElement && flagMove === true) {
-        const touch = e.touches[0];
-        activeElement.style.left = touch.clientX - offsetX + 'px'; 
-        activeElement.style.top = touch.clientY - offsetY + 'px';
-        e.preventDefault();
-      }
-    });
+    
 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && flag === true) {
