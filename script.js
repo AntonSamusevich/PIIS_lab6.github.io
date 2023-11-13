@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let touchStartTime = 0;
   let holdTimer = null;
   let clickCount = 0;
+  let flag = false;
 
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (clickCount === 2) {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
+          flag = true;
         }
         else { 
           activeElement = e.target;
@@ -46,6 +48,21 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
         e.preventDefault();
+      }
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      if (flag == true && activeElement) {
+        
+        const touch = e.touches[0];
+        const targetRect = activeElement.getBoundingClientRect();
+        const targetX = touch.clientX - targetRect.width / 2;
+        const targetY = touch.clientY - targetRect.height / 2;
+
+        activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+        activeElement.style.left = targetX + 'px';
+        activeElement.style.top = targetY + 'px';
+        
       }
     });
 
