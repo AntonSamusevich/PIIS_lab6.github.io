@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let holdTimer = null;
   let clickCount = 0;
   let flag = false;
+  let flagMove = false;
 
   targets.forEach(target => {
     target.addEventListener('touchstart', (e) => {
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const touch = e.touches[0];
           offsetX = touch.clientX - activeElement.getBoundingClientRect().left;
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
+          flagMove = true;
         }
         clickCount = 0;
       }, 300);
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('touchmove', (e) => {
-      if (activeElement && flag === false) {
+      if (activeElement && flagMove === true) {
         const touch = e.touches[0];
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
@@ -76,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
-           
+            flag = true; // Устанавливаем флаг в true после перемещения
           }
     
           clickCount = 0;
@@ -93,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement = null;
       } else {
       activeElement = null;
+      flagMove = false;
       }
     });
 
