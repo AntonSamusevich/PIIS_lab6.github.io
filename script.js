@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('touchmove', (e) => {
       if (activeElement && flagMove === true) {
         const touch = e.touches[0];
+        activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
         e.preventDefault();
@@ -59,12 +60,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && flag === true) {
+
         const currentTime = new Date().getTime();
         const touchDuration = currentTime - touchStartTime;
     
         if (touchDuration < 300) {
           clickCount = 1;
-          flag = false; 
         } else {
           clickCount = 0;
         }
@@ -80,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetRect = activeElement.getBoundingClientRect();
             const targetX = touch.clientX - targetRect.width / 2;
             const targetY = touch.clientY - targetRect.height / 2;
+
+            activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
             flag = true; 
