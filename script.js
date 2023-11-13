@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (clickCount === 1) {
             flag = false;
           }
+
           else {
             const touch = e.touches[0];
             const targetRect = activeElement.getBoundingClientRect();
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
             activeElement.style.top = targetY + 'px';
             flag = true; 
           }
+          
           clickCount = 0;
         }, 500);
       }
@@ -89,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (activeElement && flag === false) {
         activeElement.style.backgroundColor = 'red';
         activeElement = null;
+        flag = false;
       } else {
       activeElement = null;
       }
