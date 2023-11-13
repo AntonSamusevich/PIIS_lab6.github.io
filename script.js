@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         holdTimer = setTimeout(() => {
-        if (clickCount == 1) {
+        if (clickCount === 1) {
           flag == false;
         } else {
         const touch = e.touches[0];
@@ -85,6 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.backgroundColor = 'red';
       } else {
       activeElement = null;
+      }
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && e.touches.length === 2) {
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null; 
+        e.preventDefault(); 
       }
     });
   });
