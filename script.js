@@ -19,12 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
       touchStartTime = currentTime;
 
-      
+      holdTimer = setTimeout(() => {
         if (clickCount === 2) {
-          holdTimer = setTimeout(() => {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
-        }, 300);
         }
         else { 
           activeElement = e.target;
@@ -37,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
           offsetY = touch.clientY - activeElement.getBoundingClientRect().top;
         }
         clickCount = 0;
+      }, 300);
 
       e.preventDefault();
     });
@@ -50,5 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
+    target.addEventListener('touchend', () => {
+      clearTimeout(holdTimer);
+    });
   });
 });
