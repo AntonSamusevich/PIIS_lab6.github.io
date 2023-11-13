@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   targets.forEach(target => {
 
+    //обработчик события начала касания
     target.addEventListener('touchstart', (e) => {
       if (!activeElement) {
 
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     });
 
+    //обработчик события движения при касании
     document.addEventListener('touchmove', (e) => {
       if (activeElement && flagMove === true) {
         const touch = e.touches[0];
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
+    //обработчик события режима «следующий за пальцем» 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && flag === true) {
 
@@ -92,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
     
+    //обработчик события завершения касания
     target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
         activeElement.style.transition = 'none';
@@ -100,10 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
         flag = false;
       } else {
       activeElement = null;
-      }
       flagMove = false;
+      }
     });
 
+    //обработчик события касания вторым пальцем
     document.addEventListener('touchstart', (e) => {
       if (activeElement && e.touches.length === 2) {
         activeElement.style.transition = 'none';
