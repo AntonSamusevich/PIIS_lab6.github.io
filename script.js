@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
           flag = true;
-        }
-        else { 
+        } else { 
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -53,58 +52,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchstart', (e) => {
-      if (activeElement && flag === true) {
-        const currentTime = new Date().getTime();
-        const touchDuration = currentTime - touchStartTime;
-    
-        if (touchDuration < 300) {
-          clickCount = 1;
-          flag = false; 
-        } else {
-          clickCount = 0;
-        }
-    
-        touchStartTime = currentTime;
-    
-        holdTimer = setTimeout(() => {
-          if (clickCount === 1) {
-            flag = false;
-          }
-
-          else {
-            const touch = e.touches[0];
-            const targetRect = activeElement.getBoundingClientRect();
-            const targetX = touch.clientX - targetRect.width / 2;
-            const targetY = touch.clientY - targetRect.height / 2;
-            activeElement.style.left = targetX + 'px';
-            activeElement.style.top = targetY + 'px';
-            flag = true; 
-          }
-          
-          clickCount = 0;
-        }, 500);
-      }
-    });
-    
-    target.addEventListener('touchend', () => {
+    document.addEventListener('touchend', (e) => {
       if (activeElement && flag === false) {
         activeElement.style.backgroundColor = 'red';
         activeElement = null;
-        flag = false;
       } else {
-      activeElement = null;
+        activeElement = null;
       }
       flagMove = false;
     });
 
-    document.addEventListener('touchstart', (e) => {
-      if (activeElement && e.touches.length === 2) {
-        activeElement.style.left = startPosition.left;
-        activeElement.style.top = startPosition.top;
-        activeElement = null; 
-        e.preventDefault(); 
-      }
-    });
+    if (activeElement && e.touches.length === 2) {
+      activeElement.style.left = startPosition.left;
+      activeElement.style.top = startPosition.top;
+      activeElement = null; 
+      e.preventDefault(); 
+    }
   });
 });
