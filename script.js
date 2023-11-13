@@ -105,9 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('touchstart', (e) => {
       if (activeElement && e.touches.length === 2) {
+        activeElement.style.backgroundColor = 'red';
         activeElement.style.left = startPosition.left;
         activeElement.style.top = startPosition.top;
         activeElement = null; 
+        flag = false;
         e.preventDefault(); 
       }
     });
