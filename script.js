@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     target.addEventListener('touchend', () => {
-      clearTimeout(holdTimer);
+      activeElement = null;
     });
   });
 });
