@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
           clickCount = 1;
         } else {
           clickCount = 0;
+          flag = false;
         }
     
         touchStartTime = currentTime;
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         holdTimer = setTimeout(() => {
           if (clickCount === 1) {
             flag = false;
-          } else {
+          } 
             const touch = e.touches[0];
             const targetRect = activeElement.getBoundingClientRect();
             const targetX = touch.clientX - targetRect.width / 2;
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
             flag = true;
-          }
+          
     
           clickCount = 0;
         }, 300);
