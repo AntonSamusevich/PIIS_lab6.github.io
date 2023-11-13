@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('touchmove', (e) => {
-      if (activeElement && flag == false) {
+      if (activeElement && flag === false) {
         const touch = e.touches[0];
         activeElement.style.left = touch.clientX - offsetX + 'px'; 
         activeElement.style.top = touch.clientY - offsetY + 'px';
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.addEventListener('touchstart', (e) => {
-      if (flag == true && activeElement) {
+      if (activeElement && flag === true) {
         
         const currentTime = new Date().getTime();
         const touchDuration = currentTime - touchStartTime;
@@ -60,12 +60,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (touchDuration < 300) {
           clickCount = 1;
         } 
+        
+        touchStartTime = currentTime;
 
         holdTimer = setTimeout(() => {
       
         if (clickCount === 1) {
           flag == false;
         } else {
+          
         const touch = e.touches[0];
         const targetRect = activeElement.getBoundingClientRect();
         const targetX = touch.clientX - targetRect.width / 2;
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     target.addEventListener('touchend', () => {
-      if (flag === false) {
+      if (activeElement && flag === false) {
         activeElement = null;
         activeElement.style.backgroundColor = 'red';
       } else {
