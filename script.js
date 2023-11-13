@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('touchstart', (e) => {
       if (flag == true && activeElement) {
         
+        holdTimer = setTimeout(() => {
         const touch = e.touches[0];
         const targetRect = activeElement.getBoundingClientRect();
         const targetX = touch.clientX - targetRect.width / 2;
@@ -62,12 +63,17 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
         activeElement.style.left = targetX + 'px';
         activeElement.style.top = targetY + 'px';
-        
+        }, 300);
       }
     });
 
     target.addEventListener('touchend', () => {
+      if (flag === true) {
+
+      } else {
       activeElement = null;
+      activeElement.style.backgroundColor = 'red';
+      }
     });
   });
 });
