@@ -86,8 +86,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
-        activeElement = null;
+        activeElement.style.transition = 'none';
         activeElement.style.backgroundColor = 'red';
+        activeElement = null;
       } else {
       activeElement = null;
       }
