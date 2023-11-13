@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
   let flagMove = false;
 
   targets.forEach(target => {
+
     target.addEventListener('touchstart', (e) => {
+      if (!activeElement) {
+
       const currentTime = new Date().getTime();
       const touchDuration = currentTime - touchStartTime;
 
@@ -26,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
           activeElement = target;
           activeElement.style.backgroundColor = 'green';
           flag = true;
-        } else { 
+        }
+        else { 
           activeElement = e.target;
           startPosition = {
             left: target.style.left,
@@ -41,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 300);
 
       e.preventDefault();
+    }
     });
 
     document.addEventListener('touchmove', (e) => {
@@ -52,21 +57,56 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    document.addEventListener('touchend', (e) => {
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && flag === true) {
+        const currentTime = new Date().getTime();
+        const touchDuration = currentTime - touchStartTime;
+    
+        if (touchDuration < 300) {
+          clickCount = 1;
+          flag = false; 
+        } else {
+          clickCount = 0;
+        }
+    
+        touchStartTime = currentTime;
+    
+        holdTimer = setTimeout(() => {
+          if (clickCount === 1) {
+            flag = false;
+          }
+          else {
+            const touch = e.touches[0];
+            const targetRect = activeElement.getBoundingClientRect();
+            const targetX = touch.clientX - targetRect.width / 2;
+            const targetY = touch.clientY - targetRect.height / 2;
+            activeElement.style.left = targetX + 'px';
+            activeElement.style.top = targetY + 'px';
+            flag = true; 
+          }
+          clickCount = 0;
+        }, 500);
+      }
+    });
+    
+    target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
         activeElement.style.backgroundColor = 'red';
         activeElement = null;
+        flag = false;
       } else {
-        activeElement = null;
+      activeElement = null;
       }
       flagMove = false;
     });
 
-    if (activeElement && e.touches.length === 2) {
-      activeElement.style.left = startPosition.left;
-      activeElement.style.top = startPosition.top;
-      activeElement = null; 
-      e.preventDefault(); 
-    }
+    document.addEventListener('touchstart', (e) => {
+      if (activeElement && e.touches.length === 2) {
+        activeElement.style.left = startPosition.left;
+        activeElement.style.top = startPosition.top;
+        activeElement = null; 
+        e.preventDefault(); 
+      }
+    });
   });
 });
