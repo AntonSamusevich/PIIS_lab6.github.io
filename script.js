@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         if (touchDuration < 300) {
           clickCount = 1;
-          flag = false; // Если быстрое нажатие, устанавливаем флаг в false
+          flag = false; 
         } else {
           clickCount = 0;
         }
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         holdTimer = setTimeout(() => {
           if (clickCount === 0) {
-            // Удержание с задержкой
+            
             const touch = e.touches[0];
             const targetRect = activeElement.getBoundingClientRect();
             const targetX = touch.clientX - targetRect.width / 2;
@@ -78,16 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
             activeElement.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
-            flag = true; // Устанавливаем флаг в true после перемещения
+            flag = true; 
           }
     
           clickCount = 0;
-        }, 300);
+        }, 500);
       }
     });
     
-    
-
     target.addEventListener('touchend', () => {
       if (activeElement && flag === false) {
         activeElement.style.transition = 'none';
@@ -95,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
         activeElement = null;
       } else {
       activeElement = null;
-      flagMove = false;
       }
+      flagMove = false;
     });
 
     document.addEventListener('touchstart', (e) => {
