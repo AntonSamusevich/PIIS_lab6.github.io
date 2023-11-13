@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         holdTimer = setTimeout(() => {
       
         if (clickCount === 1) {
-          flag == false;
+          flag = false;
         } else {
           
         const touch = e.touches[0];
