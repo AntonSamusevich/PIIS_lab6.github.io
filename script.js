@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (touchDuration < 300) {
           clickCount = 1;
           flag = false; 
-          activeElement = null;
         } else {
           clickCount = 0;
         }
@@ -69,18 +68,18 @@ document.addEventListener('DOMContentLoaded', function () {
         touchStartTime = currentTime;
     
         holdTimer = setTimeout(() => {
-          if (clickCount === 0) {
-            
+          if (clickCount === 1) {
+            flag = false;
+          }
+          else {
             const touch = e.touches[0];
             const targetRect = activeElement.getBoundingClientRect();
             const targetX = touch.clientX - targetRect.width / 2;
             const targetY = touch.clientY - targetRect.height / 2;
-    
             activeElement.style.left = targetX + 'px';
             activeElement.style.top = targetY + 'px';
             flag = true; 
           }
-    
           clickCount = 0;
         }, 500);
       }
